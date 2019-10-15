@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-class TovarlarToyxatiController extends \yii\web\Controller
+class TovarlarRoyxatiController extends \yii\web\Controller
 {
     public function actionIndex()
     {
