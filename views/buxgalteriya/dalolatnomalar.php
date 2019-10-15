@@ -1,0 +1,2 @@
+<?php
+debug('dalolatnomalar.php');

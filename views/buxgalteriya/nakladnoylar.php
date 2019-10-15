@@ -1,0 +1,2 @@
+<?php
+debug('nakladnoylar.php');
