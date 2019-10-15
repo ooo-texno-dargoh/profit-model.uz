@@ -2,6 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\search\LangSearch;
+use Yii;
+
 class SozlamalarController extends \yii\web\Controller
 {
     public function actionKorxonaHaqida()
@@ -26,7 +29,13 @@ class SozlamalarController extends \yii\web\Controller
 
     public function actionSotuvTurlari()
     {
-        return $this->render('sotuv-turlari');
+        $searchModel = new LangSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('sotuv-turlari', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     public function actionTil()
