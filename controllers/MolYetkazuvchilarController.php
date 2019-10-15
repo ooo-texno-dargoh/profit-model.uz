@@ -21,6 +21,6 @@ class MolYetkazuvchilarController extends \yii\web\Controller
     {
         return $this->render('turlari');
     }
-
+//
 
 }
