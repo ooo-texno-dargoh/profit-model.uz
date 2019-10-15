@@ -50,12 +50,23 @@ $config = [
 
         'urlManager' => [
             'enablePrettyUrl' => true,
+//            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['nadayel'],
+                    'pluralize'=>false,
+                ],
             ],
         ],
     ],
     'params' => $params,
+    'modules' => [
+        'api' => [
+            'class' => 'app\modules\api\Module',
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {
