@@ -40,7 +40,7 @@ class LangSearch extends Lang
      */
     public function search($params)
     {
-        $query = Lang::find();
+        $query = Lang::find()->where(['<>','status',10]);
 
         // add conditions that should always apply here
 

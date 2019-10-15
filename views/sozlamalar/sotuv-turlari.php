@@ -23,7 +23,17 @@ use yii\grid\GridView; ?>
                         'short',
 //        'class',
 //        'icon',
-                        'status',
+//                        'status',
+                        [
+                            'attribute'=>'status',
+                            'filter'=>['1'=>'Faol','0'=>'Faol emas'],
+                            'value'=>function($x){
+                                if($x->status)
+                                    return "<a href='".Yii::$app->urlManager->createUrl(['/sozlamalar/change-status-lang','id'=>$x->id])."' class='btn btn-success'><i class='fa fa-check'></i></a>";
+                                return "<a href='".Yii::$app->urlManager->createUrl(['/sozlamalar/change-status-lang','id'=>$x->id])."' class='btn btn-danger'><i class='fa fa-exclamation'></i></a>";
+                            },
+                            'format'=>'raw'
+                        ],
 
 
                         [

@@ -46,7 +46,7 @@ class Lang extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'short', 'class', 'icon'], 'required'],
+            [['name', 'short'], 'required'],
             [['status'], 'integer'],
             [['name', 'class', 'icon'], 'string', 'max' => 255],
             [['short'], 'string', 'max' => 100],
@@ -60,8 +60,8 @@ class Lang extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'short' => 'Short',
+            'name' => 'Nomi',
+            'short' => 'Qisqa',
             'class' => 'Class',
             'icon' => 'Icon',
             'status' => 'Status',
