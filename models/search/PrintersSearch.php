@@ -40,7 +40,7 @@ class PrintersSearch extends Printers
      */
     public function search($params)
     {
-        $query = Printers::find();
+        $query = Printers::find()->where(['<>','status','10']);
 
         // add conditions that should always apply here
 

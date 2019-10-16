@@ -33,7 +33,7 @@ class Printers extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'ip', 'port', 'host', 'note'], 'required'],
+            [['name', 'ip', 'port', 'host',], 'required'],
             [['status'], 'integer'],
             [['name', 'ip', 'host', 'note'], 'string', 'max' => 255],
             [['port'], 'string', 'max' => 100],
@@ -47,11 +47,11 @@ class Printers extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Nomi',
             'ip' => 'Ip',
             'port' => 'Port',
             'host' => 'Host',
-            'note' => 'Note',
+            'note' => 'Ta\'rif',
             'status' => 'Status',
         ];
     }
