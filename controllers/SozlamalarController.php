@@ -100,6 +100,19 @@ class SozlamalarController extends \yii\web\Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    public function actionAddPrinterThemes()
+    {
+        $model = new PrinterThemes();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view-printer-themes','id'=>$model->id]);
+        }
+
+        return $this->render('add-printer-themes', [
+            'model' => $model,
+        ]);
+    }
+
 
     public function actionSotuvTurlari()
     {

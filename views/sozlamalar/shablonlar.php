@@ -8,7 +8,7 @@ use yii\grid\GridView; ?>
 <h5 class="card-title">Shablonlar</h5>
 <div class="main-card card">
     <div class="card-body">
-        <a href="<?=Yii::$app->urlManager->createUrl(['/sozlamalar/add-printers'])?>" class="pull-right btn btn-success"><i class="fa fa-plus-square"></i></a>
+        <a href="<?=Yii::$app->urlManager->createUrl(['/sozlamalar/add-printer-themes'])?>" class="pull-right btn btn-success"><i class="fa fa-plus-square"></i></a>
 
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
@@ -16,13 +16,12 @@ use yii\grid\GridView; ?>
             'tableOptions' => ['class' => 'mb-0 table table-hover'],
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-//
+                'theme',
                 [
                     'attribute'=>'printer_id',
                     'value'=>function($x){return $x->printer->name;},
-                    'filter'=>\yii\helpers\ArrayHelper::map(\app\models\Printers::find()->where(['id'=>1])->all(),'id','name')
+                    'filter'=>\yii\helpers\ArrayHelper::map(\app\models\Printers::find()->where(['status'=>1])->all(),'id','name')
                 ],
-                'theme',
                 [
                     'attribute'=>'status',
                     'filter'=>['1'=>'Faol','0'=>'Faol emas'],
