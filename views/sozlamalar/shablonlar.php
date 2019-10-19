@@ -8,8 +8,7 @@ use yii\grid\GridView; ?>
 <h5 class="card-title">Shablonlar</h5>
 <div class="main-card card">
     <div class="card-body">
-        <a href="<?=Yii::$app->urlManager->createUrl(['/sozlamalar/add-printer-themes'])?>" class="pull-right btn btn-success"><i class="fa fa-plus-square"></i></a>
-
+        <a href="<?=Yii::$app->urlManager->createUrl(['/sozlamalar/add-printer-themes','printer_id'=>$printer_id])?>" class="pull-right btn btn-success"><i class="fa fa-plus-square"></i></a>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,

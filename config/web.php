@@ -60,6 +60,8 @@ $config = [
                     'pluralize'=>false,
                 ],
             ],
+            'class' => 'codemix\localeurls\UrlManager',
+            'languages' => ['ru', 'uz', 'krl', 'en'],
         ],
     ],
     'params' => $params,

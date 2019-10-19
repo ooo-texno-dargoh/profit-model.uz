@@ -8,6 +8,8 @@ use Yii;
  * This is the model class for table "wherehouse_groups".
  *
  * @property int $id
+ * @property string $name
+ * @property string $note
  * @property string $adress
  * @property int $status
  *
@@ -30,9 +32,10 @@ class WherehouseGroups extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['adress'], 'required'],
+            [['name'], 'required'],
+            [['note'], 'string'],
             [['status'], 'integer'],
-            [['adress'], 'string', 'max' => 255],
+            [['name', 'adress'], 'string', 'max' => 255],
         ];
     }
 
@@ -43,6 +46,8 @@ class WherehouseGroups extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'name' => 'Name',
+            'note' => 'Note',
             'adress' => 'Adress',
             'status' => 'Status',
         ];

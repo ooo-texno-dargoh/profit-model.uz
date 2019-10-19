@@ -8,8 +8,10 @@ use Yii;
  * This is the model class for table "factories".
  *
  * @property int $id
+ * @property string $name
  * @property int $region_id
  * @property int $citytown_id
+ * @property string $address
  * @property int $status
  *
  * @property Brends[] $brends
@@ -34,7 +36,9 @@ class Factories extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'required'],
             [['region_id', 'citytown_id', 'status'], 'integer'],
+            [['name', 'address'], 'string', 'max' => 255],
             [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Regions::className(), 'targetAttribute' => ['region_id' => 'id']],
             [['citytown_id'], 'exist', 'skipOnError' => true, 'targetClass' => Citytowns::className(), 'targetAttribute' => ['citytown_id' => 'id']],
         ];
@@ -47,8 +51,10 @@ class Factories extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'name' => 'Name',
             'region_id' => 'Region ID',
             'citytown_id' => 'Citytown ID',
+            'address' => 'Address',
             'status' => 'Status',
         ];
     }

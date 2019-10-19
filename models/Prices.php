@@ -16,6 +16,7 @@ use Yii;
  * @property int $status
  *
  * @property PriceType $priceType
+ * @property Goods $good
  */
 class Prices extends \yii\db\ActiveRecord
 {
@@ -38,6 +39,7 @@ class Prices extends \yii\db\ActiveRecord
             [['price'], 'number'],
             [['datetime'], 'safe'],
             [['price_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => PriceType::className(), 'targetAttribute' => ['price_type_id' => 'id']],
+            [['good_id'], 'exist', 'skipOnError' => true, 'targetClass' => Goods::className(), 'targetAttribute' => ['good_id' => 'id']],
         ];
     }
 
@@ -63,5 +65,13 @@ class Prices extends \yii\db\ActiveRecord
     public function getPriceType()
     {
         return $this->hasOne(PriceType::className(), ['id' => 'price_type_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGood()
+    {
+        return $this->hasOne(Goods::className(), ['id' => 'good_id']);
     }
 }

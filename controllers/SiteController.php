@@ -20,13 +20,17 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['login','error'],
+                        'allow' => true,
+
+                    ],
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+
                 ],
             ],
             'verbs' => [
@@ -71,12 +75,16 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $this->layout='login';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post())) {
+//            debug($model->user->lang->short);
+            if($model->login())
+               return $this->redirect(['/site','language'=>$model->user->lang->short]);
             return $this->goBack();
         }
 

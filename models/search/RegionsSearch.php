@@ -40,7 +40,7 @@ class RegionsSearch extends Regions
      */
     public function search($params)
     {
-        $query = Regions::find();
+        $query = Regions::find()->where(['<>','status',10]);
 
         // add conditions that should always apply here
 

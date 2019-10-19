@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property int $factory_id
  * @property int $status
+ * @property string $name
  *
  * @property BrendNames[] $brendNames
  * @property Factories $factory
@@ -32,6 +33,8 @@ class Brends extends \yii\db\ActiveRecord
     {
         return [
             [['factory_id', 'status'], 'integer'],
+            [['name'], 'required'],
+            [['name'], 'string', 'max' => 255],
             [['factory_id'], 'exist', 'skipOnError' => true, 'targetClass' => Factories::className(), 'targetAttribute' => ['factory_id' => 'id']],
         ];
     }
@@ -45,6 +48,7 @@ class Brends extends \yii\db\ActiveRecord
             'id' => 'ID',
             'factory_id' => 'Factory ID',
             'status' => 'Status',
+            'name' => 'Name',
         ];
     }
 

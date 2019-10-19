@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "roles".
  *
  * @property int $id
+ * @property string $name
  * @property int $role
  * @property int $status
  *
@@ -30,7 +31,9 @@ class Roles extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'required'],
             [['role', 'status'], 'integer'],
+            [['name'], 'string', 'max' => 255],
         ];
     }
 
@@ -41,6 +44,7 @@ class Roles extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'name' => 'Name',
             'role' => 'Role',
             'status' => 'Status',
         ];

@@ -46,7 +46,7 @@ class Wherehouses extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['good_id', 'seriya', 'count', 'wherehouse_group_id', 'expiry_date', 'add_date', 'user_id', 'client_id', 'retail_price', 'base_price', 'wholesale_price', 'retail_dallor', 'base_dallor', 'wholesale_dallor'], 'required'],
+            [['good_id', 'user_id', 'client_id', 'retail_price'], 'required'],
             [['good_id', 'count', 'wherehouse_group_id', 'user_id', 'client_id', 'status'], 'integer'],
             [['expiry_date', 'add_date'], 'safe'],
             [['retail_price', 'base_price', 'wholesale_price', 'retail_dallor', 'base_dallor', 'wholesale_dallor'], 'number'],

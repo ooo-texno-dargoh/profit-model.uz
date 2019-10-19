@@ -37,7 +37,7 @@ class SoldGoods extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'good_id', 'count', 'price', 'unit_type_id', 'wherehouse_id'], 'required'],
+            [['order_id', 'good_id'], 'required'],
             [['order_id', 'good_id', 'count', 'unit_type_id', 'wherehouse_id', 'status'], 'integer'],
             [['price'], 'number'],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['order_id' => 'id']],

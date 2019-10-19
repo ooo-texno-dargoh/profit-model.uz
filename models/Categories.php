@@ -8,6 +8,8 @@ use Yii;
  * This is the model class for table "categories".
  *
  * @property int $id
+ * @property string $name
+ * @property string $photo
  * @property int $status
  *
  * @property CategoryNames[] $categoryNames
@@ -29,7 +31,9 @@ class Categories extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'required'],
             [['status'], 'integer'],
+            [['name', 'photo'], 'string', 'max' => 255],
         ];
     }
 
@@ -40,6 +44,8 @@ class Categories extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'name' => 'Name',
+            'photo' => 'Photo',
             'status' => 'Status',
         ];
     }

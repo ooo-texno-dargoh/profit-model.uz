@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm; ?>
 
 <?= $form->field($model, 'short')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($model, 'status')->dropDownList(['1'=>'Faol','0'=>'Faol emas']) ?>
+<?= $form->field($model, 'status')->dropDownList(['0'=>'Faol emas','1'=>'Faol']) ?>
 
 <div class="form-group">
     <?= Html::a('Bekor qilish',['/sozlamalar/til'],['class'=>'btn btn-danger pull-right','style'=>'margin-left:5px']) ?>

@@ -33,7 +33,7 @@ class CurrencyRate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['rate', 'datatime', 'user_id', 'klass', 'color', 'status'], 'required'],
+            [['rate'], 'required'],
             [['rate'], 'number'],
             [['datatime'], 'safe'],
             [['user_id', 'status'], 'integer'],

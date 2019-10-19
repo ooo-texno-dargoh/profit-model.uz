@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm; ?>
 
 
 <div class="form-group">
-    <?= Html::a('Bekor qilish',['../'],['class'=>'btn btn-danger pull-right','style'=>'margin-left:5px']) ?>
+    <?= Html::a('Bekor qilish',['/sozlamalar/shablonlar'],['class'=>'btn btn-danger pull-right','style'=>'margin-left:5px']) ?>
     <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success pull-right']) ?>
 </div>
 

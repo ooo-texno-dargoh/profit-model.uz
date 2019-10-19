@@ -8,6 +8,8 @@ use Yii;
  * This is the model class for table "kashes".
  *
  * @property int $id
+ * @property string $name
+ * @property string $address
  * @property string $code
  * @property int $status
  *
@@ -29,9 +31,9 @@ class Kashes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['code'], 'required'],
+            [['name'], 'required'],
             [['status'], 'integer'],
-            [['code'], 'string', 'max' => 255],
+            [['name', 'address', 'code'], 'string', 'max' => 255],
         ];
     }
 
@@ -42,6 +44,8 @@ class Kashes extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'name' => 'Name',
+            'address' => 'Address',
             'code' => 'Code',
             'status' => 'Status',
         ];

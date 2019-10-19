@@ -27,6 +27,7 @@ use Yii;
  * @property ClientType $clientType
  * @property Bank $bank
  * @property Orders[] $orders
+ * @property User[] $users
  * @property Wherehouses[] $wherehouses
  */
 class Clients extends \yii\db\ActiveRecord
@@ -45,7 +46,7 @@ class Clients extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'mfo', 'oked', 'account_number', 'address', 'landmark', 'phone', 'phone1', 'telegram', 'director', 'client_type_id', 'bank_id', 'notes', 'status'], 'required'],
+            [['name'], 'required'],
             [['mfo', 'client_type_id', 'bank_id', 'status'], 'integer'],
             [['name', 'oked', 'account_number', 'address', 'landmark', 'telegram', 'director', 'notes'], 'string', 'max' => 255],
             [['phone', 'phone1'], 'string', 'max' => 100],
@@ -109,6 +110,14 @@ class Clients extends \yii\db\ActiveRecord
     public function getOrders()
     {
         return $this->hasMany(Orders::className(), ['client_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsers()
+    {
+        return $this->hasMany(User::className(), ['client_id' => 'id']);
     }
 
     /**

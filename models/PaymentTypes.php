@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "payment_types".
  *
  * @property int $id
+ * @property string $name
  * @property int $status
  *
  * @property PaymentTypeNames[] $paymentTypeNames
@@ -29,7 +30,9 @@ class PaymentTypes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'required'],
             [['status'], 'integer'],
+            [['name'], 'string', 'max' => 255],
         ];
     }
 
@@ -40,6 +43,7 @@ class PaymentTypes extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'name' => 'Name',
             'status' => 'Status',
         ];
     }

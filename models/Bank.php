@@ -32,8 +32,8 @@ class Bank extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['mfo', 'name', 'status'], 'required'],
             [['mfo', 'status'], 'integer'],
+            [['name'], 'required'],
             [['name'], 'string', 'max' => 255],
         ];
     }

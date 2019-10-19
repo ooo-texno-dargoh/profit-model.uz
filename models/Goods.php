@@ -8,6 +8,12 @@ use Yii;
  * This is the model class for table "goods".
  *
  * @property int $id
+ * @property string $name
+ * @property string $shortname
+ * @property string $body
+ * @property string $photo1
+ * @property string $photo2
+ * @property string $photo3
  * @property double $weight
  * @property int $unit_type_id
  * @property int $count_in_case
@@ -19,12 +25,15 @@ use Yii;
  * @property string $data_time
  *
  * @property Barcodes[] $barcodes
+ * @property Discounts[] $discounts
+ * @property Discounts[] $discounts0
  * @property GoodFotos[] $goodFotos
  * @property GoodNames[] $goodNames
  * @property UnitType $unitType
  * @property Categories $category
  * @property Brends $brend
  * @property Factories $factory
+ * @property Prices[] $prices
  * @property SoldGoods[] $soldGoods
  * @property Wherehouses[] $wherehouses
  */
@@ -44,10 +53,11 @@ class Goods extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name', 'shortname', 'unit_type_id'], 'required'],
             [['weight'], 'number'],
-            [['unit_type_id', 'count_in_case', 'category_id', 'brend_id', 'factory_id', 'min_count', 'status'], 'required'],
             [['unit_type_id', 'count_in_case', 'category_id', 'brend_id', 'factory_id', 'min_count', 'status'], 'integer'],
             [['data_time'], 'safe'],
+            [['name', 'shortname', 'body', 'photo1', 'photo2', 'photo3'], 'string', 'max' => 255],
             [['unit_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => UnitType::className(), 'targetAttribute' => ['unit_type_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['brend_id'], 'exist', 'skipOnError' => true, 'targetClass' => Brends::className(), 'targetAttribute' => ['brend_id' => 'id']],
@@ -62,6 +72,12 @@ class Goods extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'name' => 'Name',
+            'shortname' => 'Shortname',
+            'body' => 'Body',
+            'photo1' => 'Photo1',
+            'photo2' => 'Photo2',
+            'photo3' => 'Photo3',
             'weight' => 'Weight',
             'unit_type_id' => 'Unit Type ID',
             'count_in_case' => 'Count In Case',
@@ -80,6 +96,22 @@ class Goods extends \yii\db\ActiveRecord
     public function getBarcodes()
     {
         return $this->hasMany(Barcodes::className(), ['good_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDiscounts()
+    {
+        return $this->hasMany(Discounts::className(), ['good_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDiscounts0()
+    {
+        return $this->hasMany(Discounts::className(), ['free_good_id' => 'id']);
     }
 
     /**
@@ -128,6 +160,14 @@ class Goods extends \yii\db\ActiveRecord
     public function getFactory()
     {
         return $this->hasOne(Factories::className(), ['id' => 'factory_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPrices()
+    {
+        return $this->hasMany(Prices::className(), ['good_id' => 'id']);
     }
 
     /**

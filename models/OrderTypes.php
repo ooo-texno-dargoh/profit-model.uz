@@ -8,6 +8,8 @@ use Yii;
  * This is the model class for table "order_types".
  *
  * @property int $id
+ * @property string $name
+ * @property string $note
  * @property int $status
  * @property string $code
  *
@@ -30,9 +32,10 @@ class OrderTypes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'required'],
+            [['note'], 'string'],
             [['status'], 'integer'],
-            [['code'], 'required'],
-            [['code'], 'string', 'max' => 255],
+            [['name', 'code'], 'string', 'max' => 255],
         ];
     }
 
@@ -43,6 +46,8 @@ class OrderTypes extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'name' => 'Name',
+            'note' => 'Note',
             'status' => 'Status',
             'code' => 'Code',
         ];

@@ -1,5 +1,8 @@
 <?php
 //debug($model);
+use app\models\PrinterThemes;
+use app\models\search\PrinterThemesSearch;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\widgets\DetailView; ?>
 
@@ -62,10 +65,19 @@ use yii\widgets\DetailView; ?>
         </div>
     </div>
     <div class="col-lg-12">
-        <h5 class="card-title">Shu printer uchun shablonlar</h5>
         <div class="main-card card">
             <div class="card-body">
-                <?=$this->render('form-printers',['model'=>$model]) ?>
+                <?php
+                $searchModel = new PrinterThemesSearch();
+                $dataProvider=new ActiveDataProvider([
+                        'query'=>PrinterThemes::find()->where(['printer_id'=>$model->id])->andWhere(['<>','status',10]),
+                    ]);
+                echo $this->render('shablonlar', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'printer_id' => $model->id,
+                ]);
+                ?>
             </div>
         </div>
     </div>

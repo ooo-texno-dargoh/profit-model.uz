@@ -8,6 +8,7 @@ use app\models\PrinterThemes;
 use app\models\search\LangSearch;
 use app\models\search\PrintersSearch;
 use app\models\search\PrinterThemesSearch;
+use app\models\User;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
@@ -89,21 +90,21 @@ class SozlamalarController extends \yii\web\Controller
     {
         $searchModel = new PrinterThemesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination=['pageSize'=>20];
         if($printer_id)
             $dataProvider=new ActiveDataProvider([
-                'query'=>PrinterThemes::find()->where(['printer_id'=>$printer_id]),
-                'pageSize'=>20
+                'query'=>PrinterThemes::find()->where(['printer_id'=>$printer_id])->andWhere(['<>','status',10]),
             ]);
+        $dataProvider->pagination=['pageSize'=>20];
         return $this->render('shablonlar', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'printer_id'=>$printer_id,
         ]);
     }
-    public function actionAddPrinterThemes()
+    public function actionAddPrinterThemes($printer_id=null)
     {
         $model = new PrinterThemes();
-
+        if($printer_id) $model->printer_id=$printer_id;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view-printer-themes','id'=>$model->id]);
         }
@@ -111,6 +112,45 @@ class SozlamalarController extends \yii\web\Controller
         return $this->render('add-printer-themes', [
             'model' => $model,
         ]);
+    }
+
+    public function actionChangeStatusPrinterTheme($id)
+    {
+        $model=PrinterThemes::findOne($id);
+        if($model->status){
+            $model->status=0;
+        }
+        else $model->status=1;
+        $model->save();
+        $this->redirect(['shablonlar']);
+    }
+    public function actionViewPrinterThemes($id)
+    {
+        $model=PrinterThemes::findOne($id);
+        return $this->render('view-printer-themes',
+            [
+                'model'=>$model,
+            ]);
+    }
+
+    public function actionUpdatePrinterThemes($id){
+        $model = PrinterThemes::findOne($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view-printer-themes','id'=>$model->id]);
+        }
+
+        return $this->render('update-printer-themes', [
+            'model' => $model,
+        ]);
+    }
+    public function actionDeletePrinterThemes($id)
+    {
+        $model = PrinterThemes::findOne($id);
+
+        $model->status=10;
+        $model->save();
+        $this->redirect(['/sozlamalar/shablonlar']);
     }
 
 
@@ -131,13 +171,10 @@ class SozlamalarController extends \yii\web\Controller
     }
     public function actionChangeStatusLang($id)
     {
-        $model=Lang::find()->where(['id'=>$id])->one();
-        if($model->status){
-            $model->status=0;
-        }
-        else $model->status=1;
-        $model->save();
-        $this->redirect(['/sozlamalar/til']);
+        $user=User::findOne(Yii::$app->user->identity->id);
+        $user->lang_id=$id;
+        $user->save();
+        $this->redirect(['/sozlamalar/til','language'=>$user->lang->short]);
     }
     public function actionAddTil()
     {

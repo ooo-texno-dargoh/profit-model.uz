@@ -9,39 +9,76 @@ use yii\bootstrap\ActiveForm;
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
+$error=$model->firstErrors;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100 p-l-50 p-r-50 p-t-77 p-b-30">
+            <?php $form = ActiveForm::begin([
+                'id' => 'login-form',
+                'options'=>['class'=>'login100-form validate-form'],
+                'fieldConfig' => [
+                    'template' => "{label}\n<div>{input}</div>\n",
+                ],
+            ]); ?>
+<!--            <form class="login100-form validate-form">-->
+					<span class="login100-form-title p-b-40">
+						<?=gl('Kirish')?>
+					</span>
+            <?php
+            if(sizeof($error))
+                echo '<div class="wrap-input100 validate-input m-b-16 alert alert-danger fade show" role="alert"><center>Login yoki parol xato!!!</center> </div>';
+            ?>
+                <div class="wrap-input100 validate-input m-b-16" data-validate = "Valid email is required: ex@abc.xyz">
+                    <?= $form->field($model, 'username')->textInput(['autofocus' => true,'class'=>'input100','placeholder'=>gl('Login')])->label(false) ?>
+<!--                    <input class="input100" type="text" name="email" placeholder="Email">-->
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+							<span class="lnr lnr-user"></span>
+						</span>
+                </div>
 
-    <p>Please fill out the following fields to login:</p>
+                <div class="wrap-input100 validate-input m-b-16" data-validate = "Password is required">
+                    <?= $form->field($model, 'password')->passwordInput(['class'=>'input100','placeholder'=>gl('Parol')])->label(false) ?>
+<!--                    <input class="input100" type="password" name="pass" placeholder="Password">-->
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+							<span class="lnr lnr-lock"></span>
+						</span>
+                </div>
 
-    <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'layout' => 'horizontal',
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
-    ]); ?>
+                <div class="contact100-form-checkbox m-l-4">
+<!--                    --><?//= $form->field($model, 'rememberMe')->checkbox(['input-checkbox100'])->label(false) ?>
+                    <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                    <label class="label-checkbox100" for="ckb1">
+                        <?=gl('Eslab qolish')?>
+                    </label>
+                </div>
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                <div class="container-login100-form-btn p-t-25">
+                    <button class="login100-form-btn" type="submit">
+                        <?=gl('Kirish')?>
+                    </button>
+                </div>
 
-        <?= $form->field($model, 'password')->passwordInput() ?>
+                <div class="text-center w-full p-t-42 p-b-22">
+						<span class="txt1">
+							<?=gl('Yoki')?>
+						</span>
+                </div>
 
-        <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-        ]) ?>
+                <a href="#" class="btn-face m-b-10">
+                    <i class="fa fa-barcode"></i>
+                    Barcode
+                </a>
 
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            </div>
+                <a href="#" class="btn-face m-b-10">
+                    <i class="fa fa-qrcode"> </i>
+<!--                    <img src="--><?//=Yii::$app->homeUrl?><!--loginpage/images/icons/icon-google.png" alt="GOOGLE">-->
+                    Qr Code
+                </a>
+            <?php ActiveForm::end(); ?>
+<!--            </form>-->
         </div>
-
-    <?php ActiveForm::end(); ?>
-
-    <div class="col-lg-offset-1" style="color:#999;">
-        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-        To modify the username/password, please check out the code <code>app\models\User::$users</code>.
     </div>
 </div>

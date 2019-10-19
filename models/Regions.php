@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "regions".
  *
  * @property int $id
+ * @property string $name
  * @property int $status
  * @property string $code
  *
@@ -31,9 +32,9 @@ class Regions extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'required'],
             [['status'], 'integer'],
-            [['code'], 'required'],
-            [['code'], 'string', 'max' => 255],
+            [['name', 'code'], 'string', 'max' => 255],
         ];
     }
 
@@ -44,6 +45,7 @@ class Regions extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'name' => 'Name',
             'status' => 'Status',
             'code' => 'Code',
         ];

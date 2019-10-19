@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "citytowns".
  *
  * @property int $id
+ * @property string $name
  * @property string $code
  * @property int $status
  * @property int $region_id
@@ -32,9 +33,9 @@ class Citytowns extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'region_id'], 'required'],
+            [['name'], 'required'],
             [['status', 'region_id'], 'integer'],
-            [['code'], 'string', 'max' => 255],
+            [['name', 'code'], 'string', 'max' => 255],
             [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Regions::className(), 'targetAttribute' => ['region_id' => 'id']],
         ];
     }
@@ -46,6 +47,7 @@ class Citytowns extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'name' => 'Name',
             'code' => 'Code',
             'status' => 'Status',
             'region_id' => 'Region ID',

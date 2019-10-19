@@ -43,8 +43,8 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['datetime', 'user_id', 'client_id', 'kash_id', 'total_sum', 'nds', 'discount', 'order_type_id', 'good_types_count', 'goods_count'], 'required'],
             [['datetime'], 'safe'],
+            [['user_id', 'client_id', 'kash_id', 'total_sum'], 'required'],
             [['user_id', 'client_id', 'kash_id', 'order_type_id', 'good_types_count', 'goods_count', 'status'], 'integer'],
             [['total_sum', 'nds', 'discount'], 'number'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],

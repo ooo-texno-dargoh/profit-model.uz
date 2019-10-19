@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "price_type".
  *
  * @property int $id
+ * @property string $name
  * @property double $percent
  * @property int $status
  *
@@ -30,8 +31,10 @@ class PriceType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'required'],
             [['percent'], 'number'],
             [['status'], 'integer'],
+            [['name'], 'string', 'max' => 255],
         ];
     }
 
@@ -42,6 +45,7 @@ class PriceType extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'name' => 'Name',
             'percent' => 'Percent',
             'status' => 'Status',
         ];

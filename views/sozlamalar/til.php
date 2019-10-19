@@ -30,7 +30,7 @@ use yii\grid\GridView; ?>
                             'attribute'=>'status',
                             'filter'=>['1'=>'Faol','0'=>'Faol emas'],
                             'value'=>function($x){
-                                if($x->status)
+                                if($x->id==Yii::$app->user->identity->lang_id)
                                     return Html::a(Yii::t('app', '<span class="fa fa-check"></span>  '), ['/sozlamalar/change-status-lang','id'=>$x->id], [
                                         'class' => 'mb-2 mr-2 border-0 btn-transition btn btn-outline-success',
                                         'data' => [
@@ -50,7 +50,7 @@ use yii\grid\GridView; ?>
 
                         [
                             'class' => 'yii\grid\ActionColumn',
-                            'template' => '{view}{update}{delete}',
+                            'template' => '{update}{delete}',
                             'buttons' => [
                                 'update' => function ($url, $model) {
                                     return Html::a(Yii::t('app', '<span class="fa fa-edit"></span>'), ['update-til', 'id' => $model->id], [

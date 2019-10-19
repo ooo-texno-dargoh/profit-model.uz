@@ -8,6 +8,8 @@ use Yii;
  * This is the model class for table "client_type".
  *
  * @property int $id
+ * @property string $name
+ * @property int $type
  * @property int $status
  *
  * @property ClientTypeNames[] $clientTypeNames
@@ -29,8 +31,9 @@ class ClientType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status'], 'required'],
-            [['status'], 'integer'],
+            [['name'], 'required'],
+            [['type', 'status'], 'integer'],
+            [['name'], 'string', 'max' => 255],
         ];
     }
 
@@ -41,6 +44,8 @@ class ClientType extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'name' => 'Name',
+            'type' => 'Type',
             'status' => 'Status',
         ];
     }

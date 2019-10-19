@@ -32,7 +32,7 @@ class RegionNames extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'region_id', 'status'], 'required'],
+            [['region_id', ], 'required'],
             [['region_id', 'lang_id', 'status'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Regions::className(), 'targetAttribute' => ['region_id' => 'id']],
