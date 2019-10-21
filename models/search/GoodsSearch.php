@@ -18,8 +18,8 @@ class GoodsSearch extends Goods
     {
         return [
             [['id', 'unit_type_id', 'count_in_case', 'category_id', 'brend_id', 'factory_id', 'min_count', 'status'], 'integer'],
+            [['name', 'shortname', 'body', 'photo1', 'photo2', 'photo3', 'data_time'], 'safe'],
             [['weight'], 'number'],
-            [['data_time'], 'safe'],
         ];
     }
 
@@ -70,6 +70,13 @@ class GoodsSearch extends Goods
             'status' => $this->status,
             'data_time' => $this->data_time,
         ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'shortname', $this->shortname])
+            ->andFilterWhere(['like', 'body', $this->body])
+            ->andFilterWhere(['like', 'photo1', $this->photo1])
+            ->andFilterWhere(['like', 'photo2', $this->photo2])
+            ->andFilterWhere(['like', 'photo3', $this->photo3]);
 
         return $dataProvider;
     }

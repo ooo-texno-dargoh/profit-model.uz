@@ -18,6 +18,7 @@ class FactoriesSearch extends Factories
     {
         return [
             [['id', 'region_id', 'citytown_id', 'status'], 'integer'],
+            [['name', 'address'], 'safe'],
         ];
     }
 
@@ -39,7 +40,7 @@ class FactoriesSearch extends Factories
      */
     public function search($params)
     {
-        $query = Factories::find();
+        $query = Factories::find()->where(['<>','status',10]);
 
         // add conditions that should always apply here
 
@@ -62,6 +63,9 @@ class FactoriesSearch extends Factories
             'citytown_id' => $this->citytown_id,
             'status' => $this->status,
         ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'address', $this->address]);
 
         return $dataProvider;
     }

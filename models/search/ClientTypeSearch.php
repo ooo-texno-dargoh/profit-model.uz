@@ -17,7 +17,8 @@ class ClientTypeSearch extends ClientType
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
+            [['id', 'type', 'status'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -58,8 +59,11 @@ class ClientTypeSearch extends ClientType
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'type' => $this->type,
             'status' => $this->status,
         ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

@@ -12,7 +12,7 @@ use yii\widgets\DetailView; ?>
         <div class="main-card card">
             <div class="card-body">
                 <p>
-                    <?= Html::a('<i class="fa fa-arrow-left"></i>', ['/sozlamalar/printerlar', 'id' => $model->id], ['class' => 'border-0 btn-transition btn btn-outline-success']) ?>
+                    <?= Html::a('<i class="fa fa-arrow-left"></i>', ['/sozlamalar/printerlar'], ['class' => 'border-0 btn-transition btn btn-outline-success']) ?>
                     <?= Html::a('<i class="fa fa-edit"></i>', ['update-printers', 'id' => $model->id], ['class' => 'btn btn-primary pull-right']) ?>
                     <?= Html::a('<i class="fa fa-trash"></i>', ['delete-printers', 'id' => $model->id], [
                             'class' => 'btn btn-danger pull-right',

@@ -18,7 +18,7 @@ class MyRequisitesSearch extends MyRequisites
     {
         return [
             [['id', 'mfo', 'lang_id', 'status'], 'integer'],
-            [['name', 'oked', 'account_number', 'adress', 'landmark', 'phone', 'directory'], 'safe'],
+            [['name', 'qrcode', 'oked', 'account_number', 'adress', 'landmark', 'phone', 'director'], 'safe'],
         ];
     }
 
@@ -65,12 +65,13 @@ class MyRequisitesSearch extends MyRequisites
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'qrcode', $this->qrcode])
             ->andFilterWhere(['like', 'oked', $this->oked])
             ->andFilterWhere(['like', 'account_number', $this->account_number])
             ->andFilterWhere(['like', 'adress', $this->adress])
             ->andFilterWhere(['like', 'landmark', $this->landmark])
             ->andFilterWhere(['like', 'phone', $this->phone])
-            ->andFilterWhere(['like', 'directory', $this->directory]);
+            ->andFilterWhere(['like', 'director', $this->director]);
 
         return $dataProvider;
     }

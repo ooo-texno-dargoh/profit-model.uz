@@ -18,6 +18,7 @@ class CategoriesSearch extends Categories
     {
         return [
             [['id', 'status'], 'integer'],
+            [['name', 'photo'], 'safe'],
         ];
     }
 
@@ -60,6 +61,9 @@ class CategoriesSearch extends Categories
             'id' => $this->id,
             'status' => $this->status,
         ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'photo', $this->photo]);
 
         return $dataProvider;
     }

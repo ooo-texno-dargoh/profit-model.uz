@@ -17,8 +17,8 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['id', 'role', 'lang_id', 'is_active', 'online', 'status'], 'integer'],
-            [['username', 'password', 'fio', 'phone', 'phone1', 'photo', 'telegram'], 'safe'],
+            [['id', 'role', 'lang_id', 'is_active', 'online', 'client_id', 'status'], 'integer'],
+            [['username', 'password', 'fio', 'phone', 'phone1', 'photo', 'telegram', 'barcode', 'qrcode', 'auth_key', 'password_md5'], 'safe'],
         ];
     }
 
@@ -63,6 +63,7 @@ class UserSearch extends User
             'lang_id' => $this->lang_id,
             'is_active' => $this->is_active,
             'online' => $this->online,
+            'client_id' => $this->client_id,
             'status' => $this->status,
         ]);
 
@@ -72,7 +73,11 @@ class UserSearch extends User
             ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'phone1', $this->phone1])
             ->andFilterWhere(['like', 'photo', $this->photo])
-            ->andFilterWhere(['like', 'telegram', $this->telegram]);
+            ->andFilterWhere(['like', 'telegram', $this->telegram])
+            ->andFilterWhere(['like', 'barcode', $this->barcode])
+            ->andFilterWhere(['like', 'qrcode', $this->qrcode])
+            ->andFilterWhere(['like', 'auth_key', $this->auth_key])
+            ->andFilterWhere(['like', 'password_md5', $this->password_md5]);
 
         return $dataProvider;
     }

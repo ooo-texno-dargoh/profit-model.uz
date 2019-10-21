@@ -18,6 +18,7 @@ class UnitTypeSearch extends UnitType
     {
         return [
             [['id', 'status'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -39,7 +40,7 @@ class UnitTypeSearch extends UnitType
      */
     public function search($params)
     {
-        $query = UnitType::find();
+        $query = UnitType::find()->where(['<>','status',10]);
 
         // add conditions that should always apply here
 
@@ -60,6 +61,8 @@ class UnitTypeSearch extends UnitType
             'id' => $this->id,
             'status' => $this->status,
         ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

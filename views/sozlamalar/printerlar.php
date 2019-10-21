@@ -8,6 +8,7 @@ use yii\grid\GridView; ?>
 <h5 class="card-title">Printerlar</h5>
 <div class="main-card card">
     <div class="card-body">
+
         <a href="<?=Yii::$app->urlManager->createUrl(['/sozlamalar/add-printers'])?>" class="pull-right btn btn-success"><i class="fa fa-plus-square"></i></a>
 
         <?= GridView::widget([

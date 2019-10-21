@@ -31,7 +31,7 @@ class PriceType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name','percent'], 'required'],
             [['percent'], 'number'],
             [['status'], 'integer'],
             [['name'], 'string', 'max' => 255],

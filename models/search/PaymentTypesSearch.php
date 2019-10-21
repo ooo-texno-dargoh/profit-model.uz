@@ -18,6 +18,8 @@ class PaymentTypesSearch extends PaymentTypes
     {
         return [
             [['id', 'status'], 'integer'],
+            [['name'], 'safe'],
+            [['percent'], 'number'],
         ];
     }
 
@@ -39,7 +41,7 @@ class PaymentTypesSearch extends PaymentTypes
      */
     public function search($params)
     {
-        $query = PaymentTypes::find();
+        $query = PaymentTypes::find()->where(['<>','status',10]);
 
         // add conditions that should always apply here
 
@@ -58,8 +60,11 @@ class PaymentTypesSearch extends PaymentTypes
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'percent' => $this->percent,
             'status' => $this->status,
         ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

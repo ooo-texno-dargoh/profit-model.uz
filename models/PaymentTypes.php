@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $name
+ * @property double $percent
  * @property int $status
  *
  * @property PaymentTypeNames[] $paymentTypeNames
@@ -30,7 +31,8 @@ class PaymentTypes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name','percent'], 'required'],
+            [['percent'], 'number'],
             [['status'], 'integer'],
             [['name'], 'string', 'max' => 255],
         ];
@@ -44,6 +46,7 @@ class PaymentTypes extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'percent' => 'Percent',
             'status' => 'Status',
         ];
     }

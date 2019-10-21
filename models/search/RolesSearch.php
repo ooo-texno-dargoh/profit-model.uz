@@ -18,6 +18,7 @@ class RolesSearch extends Roles
     {
         return [
             [['id', 'role', 'status'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -61,6 +62,8 @@ class RolesSearch extends Roles
             'role' => $this->role,
             'status' => $this->status,
         ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

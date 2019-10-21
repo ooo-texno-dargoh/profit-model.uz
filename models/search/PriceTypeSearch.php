@@ -18,6 +18,7 @@ class PriceTypeSearch extends PriceType
     {
         return [
             [['id', 'status'], 'integer'],
+            [['name'], 'safe'],
             [['percent'], 'number'],
         ];
     }
@@ -40,7 +41,7 @@ class PriceTypeSearch extends PriceType
      */
     public function search($params)
     {
-        $query = PriceType::find();
+        $query = PriceType::find()->where(['<>','status',10]);
 
         // add conditions that should always apply here
 
@@ -62,6 +63,8 @@ class PriceTypeSearch extends PriceType
             'percent' => $this->percent,
             'status' => $this->status,
         ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

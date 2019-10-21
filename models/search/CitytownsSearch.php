@@ -40,7 +40,7 @@ class CitytownsSearch extends Citytowns
      */
     public function search($params)
     {
-        $query = Citytowns::find();
+        $query = Citytowns::find()->where(['<>','status',10]);
 
         // add conditions that should always apply here
 

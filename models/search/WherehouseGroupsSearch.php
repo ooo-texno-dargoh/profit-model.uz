@@ -18,7 +18,7 @@ class WherehouseGroupsSearch extends WherehouseGroups
     {
         return [
             [['id', 'status'], 'integer'],
-            [['adress'], 'safe'],
+            [['name', 'note', 'adress'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class WherehouseGroupsSearch extends WherehouseGroups
      */
     public function search($params)
     {
-        $query = WherehouseGroups::find();
+        $query = WherehouseGroups::find()->where(['<>','status',10]);
 
         // add conditions that should always apply here
 
@@ -62,7 +62,9 @@ class WherehouseGroupsSearch extends WherehouseGroups
             'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'adress', $this->adress]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'note', $this->note])
+            ->andFilterWhere(['like', 'adress', $this->adress]);
 
         return $dataProvider;
     }

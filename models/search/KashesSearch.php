@@ -18,7 +18,7 @@ class KashesSearch extends Kashes
     {
         return [
             [['id', 'status'], 'integer'],
-            [['code'], 'safe'],
+            [['name', 'address', 'code'], 'safe'],
         ];
     }
 
@@ -62,7 +62,9 @@ class KashesSearch extends Kashes
             'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'code', $this->code]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'address', $this->address])
+            ->andFilterWhere(['like', 'code', $this->code]);
 
         return $dataProvider;
     }

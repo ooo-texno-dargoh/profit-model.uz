@@ -2,12 +2,22 @@
 
 namespace app\controllers;
 
+use app\models\Factories;
 use app\models\Lang;
+use app\models\MyRequisites;
+use app\models\PaymentTypes;
+use app\models\PriceType;
 use app\models\Printers;
 use app\models\PrinterThemes;
+use app\models\search\FactoriesSearch;
 use app\models\search\LangSearch;
+use app\models\search\OrderTypesSearch;
+use app\models\search\PaymentTypesSearch;
+use app\models\search\PriceTypeSearch;
 use app\models\search\PrintersSearch;
 use app\models\search\PrinterThemesSearch;
+use app\models\search\UnitTypeSearch;
+use app\models\UnitType;
 use app\models\User;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -17,12 +27,65 @@ class SozlamalarController extends \yii\web\Controller
 {
     public function actionKorxonaHaqida()
     {
-        return $this->render('korxona-haqida');
+        $model=MyRequisites::findOne(1);
+        return $this->render('korxona-haqida',
+            [
+                'model'=>$model,
+            ]);
+//        return $this->render('korxona-haqida');
+    }
+    public function actionUpdateKorxonaHaqida($id){
+        $model=MyRequisites::findOne($id);
+        if($model->load(Yii::$app->request->post()) && $model->save())
+            return $this->redirect(['/sozlamalar/korxona-haqida']);
+        return $this->render('update-korxona-haqida',[
+            'model'=>$model,
+        ]);
     }
 
     public function actionOlchovBirliklari()
     {
-        return $this->render('olchov-birliklari');
+        $searchModel = new UnitTypeSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination=['pageSize'=>20];
+        return $this->render('olchov-birliklari', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionAddUnitType()
+    {
+        $model = new UnitType();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['/sozlamalar/olchov-birliklari']);
+        }
+
+        return $this->render('add-unit-type', [
+            'model' => $model,
+        ]);
+    }
+    public function actionUpdateUnitType($id)
+    {
+        $model = UnitType::findOne($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['/sozlamalar/olchov-birliklari']);
+        }
+
+        return $this->render('update-unit-type', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionDeleteUnitType($id)
+    {
+        $model = UnitType::findOne($id);
+
+        $model->status=10;
+        $model->save();
+        $this->redirect(['/sozlamalar/olchov-birliklari']);
     }
 
     public function actionPrinterlar()
@@ -156,7 +219,47 @@ class SozlamalarController extends \yii\web\Controller
 
     public function actionSotuvTurlari()
     {
-        return $this->render('sotuv-turlari');
+        $searchModel = new PriceTypeSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination=['pageSize'=>20];
+        return $this->render('sotuv-turlari', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionAddPriceType()
+    {
+        $model = new PriceType();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['/sozlamalar/sotuv-turlari']);
+        }
+
+        return $this->render('add-price-type', [
+            'model' => $model,
+        ]);
+    }
+    public function actionUpdatePriceType($id)
+    {
+        $model = PriceType::findOne($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['/sozlamalar/sotuv-turlari']);
+        }
+
+        return $this->render('update-price-type', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionDeletePriceType($id)
+    {
+        $model = PriceType::findOne($id);
+
+        $model->status=10;
+        $model->save();
+        $this->redirect(['/sozlamalar/sotuv-turlari']);
     }
 //lang
     public function actionTil()
@@ -211,12 +314,102 @@ class SozlamalarController extends \yii\web\Controller
 
     public function actionTolovTurlari()
     {
-        return $this->render('tolov-turlari');
+        $searchModel = new PaymentTypesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination=['pageSize'=>20];
+        return $this->render('tolov-turlari', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
+    public function actionAddPaymentType()
+    {
+        $model = new PaymentTypes();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['/sozlamalar/tolov-turlari']);
+        }
+
+        return $this->render('add-payment-type', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionUpdatePaymentType($id)
+    {
+        $model = PaymentTypes::findOne($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['/sozlamalar/tolov-turlari']);
+        }
+
+        return $this->render('update-payment-type', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionDeletePaymentType($id)
+    {
+        $model = PaymentTypes::findOne($id);
+
+        $model->status=10;
+        $model->save();
+        $this->redirect(['/sozlamalar/tolov-turlari']);
+    }
     public function actionZavodFabrikalar()
     {
-        return $this->render('zavod-fabrikalar');
+        $searchModel = new FactoriesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination=['pageSize'=>20];
+        return $this->render('zavod-fabrikalar', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+//        return $this->render('');
+    }
+
+    public function actionViewFactories($id)
+    {
+        $model=Factories::findOne($id);
+        return $this->render('view-factories',
+            [
+                'model'=>$model,
+            ]);
+    }
+
+    public function actionAddFactories()
+    {
+        $model = new Factories();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view-factories','id'=>$model->id]);
+        }
+
+        return $this->render('add-factories', [
+            'model' => $model,
+        ]);
+    }
+    public function actionUpdateFactories($id)
+    {
+        $model = Factories::findOne($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view-factories','id'=>$model->id]);
+        }
+
+        return $this->render('update-factories', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionDeleteFactories($id)
+    {
+        $model = Factories::findOne($id);
+
+        $model->status=10;
+        $model->save();
+        $this->redirect(['/sozlamalar/zavod-fabrikalar']);
     }
 
 }

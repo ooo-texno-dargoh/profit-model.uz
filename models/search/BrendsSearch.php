@@ -18,6 +18,7 @@ class BrendsSearch extends Brends
     {
         return [
             [['id', 'factory_id', 'status'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -61,6 +62,8 @@ class BrendsSearch extends Brends
             'factory_id' => $this->factory_id,
             'status' => $this->status,
         ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

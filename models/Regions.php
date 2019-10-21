@@ -45,7 +45,7 @@ class Regions extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Viloyat nomi',
             'status' => 'Status',
             'code' => 'Code',
         ];

@@ -18,7 +18,7 @@ class OrderTypesSearch extends OrderTypes
     {
         return [
             [['id', 'status'], 'integer'],
-            [['code'], 'safe'],
+            [['name', 'note', 'code'], 'safe'],
         ];
     }
 
@@ -62,7 +62,9 @@ class OrderTypesSearch extends OrderTypes
             'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'code', $this->code]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'note', $this->note])
+            ->andFilterWhere(['like', 'code', $this->code]);
 
         return $dataProvider;
     }

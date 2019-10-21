@@ -40,7 +40,7 @@ class BankSearch extends Bank
      */
     public function search($params)
     {
-        $query = Bank::find();
+        $query = Bank::find()->where(['<>','status',10]);
 
         // add conditions that should always apply here
 

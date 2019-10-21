@@ -15,25 +15,23 @@ use yii\grid\GridView; ?>
             'tableOptions' => ['class' => 'mb-0 table table-hover'],
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-                    [
-//                        'value'=>function($x){return}
-                    ],
+                    'name',
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view}{update}{delete}',
                     'buttons' => [
                         'view' => function ($url, $model) {
-                            return Html::a(Yii::t('app', '<span class="fa fa-eye"></span>'), ['view-printer-themes', 'id' => $model->id], [
+                            return Html::a(Yii::t('app', '<span class="fa fa-eye"></span>'), ['view-regions', 'id' => $model->id], [
                                 'class' => 'mb-2 mr-2 border-0 btn-transition btn btn-outline-info',
                             ]);
                         },
                         'update' => function ($url, $model) {
-                            return Html::a(Yii::t('app', '<span class="fa fa-edit"></span>'), ['update-printer-themes', 'id' => $model->id], [
+                            return Html::a(Yii::t('app', '<span class="fa fa-edit"></span>'), ['update-regions', 'id' => $model->id], [
                                 'class' => 'mb-2 mr-2 border-0 btn-transition btn btn-outline-info',
                             ]);
                         },
                         'delete' => function ($url, $model) {
-                            return Html::a(Yii::t('app', '<span class="fa fa-trash"></span>  '), ['delete-printer-themes', 'id' => $model->id], [
+                            return Html::a(Yii::t('app', '<span class="fa fa-trash"></span>  '), ['delete-regions', 'id' => $model->id], [
                                 'class' => 'mb-2 mr-2 border-0 btn-transition btn btn-outline-danger',
                                 'data' => [
                                     'confirm' => Yii::t('app', 'Haqiqatan ham ushbu ma\'lumotni o\'chirmoqchimisiz?'),
