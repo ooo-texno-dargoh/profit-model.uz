@@ -9,11 +9,30 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property string $username
- * @property string $fio
- * @property string authKey
  * @property string $password
- * @property string $image
+ * @property string $fio
+ * @property int $role
+ * @property string $phone
+ * @property string $phone1
+ * @property int $lang_id
+ * @property string $photo
+ * @property string $telegram
+ * @property int $is_active
+ * @property int $online
+ * @property string $barcode
+ * @property string $qrcode
+ * @property string $auth_key
+ * @property int $client_id
+ * @property string $password_md5
+ * @property int $status
  *
+ * @property CurrencyRate[] $currencyRates
+ * @property Discounts[] $discounts
+ * @property Orders[] $orders
+ * @property Roles $role0
+ * @property Lang $lang
+ * @property Clients $client
+ * @property Wherehouses[] $wherehouses
  */
 
 
@@ -30,11 +49,14 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password','fio'], 'required'],
-            [['username','password','authKey','fio'], 'string', 'max' => 100],
-            [['photo'], 'file','extensions'=>'png, jpg, bmp, ico'],
-
-
+            [['username',], 'required'],
+            [['role', 'lang_id', 'is_active', 'online', 'client_id', 'status'], 'integer'],
+            [['username', 'password', 'fio', 'photo', 'telegram'], 'string', 'max' => 250],
+            [['phone', 'phone1'], 'string', 'max' => 100],
+            [['barcode', 'qrcode', 'auth_key', 'password_md5'], 'string', 'max' => 255],
+            [['role'], 'exist', 'skipOnError' => true, 'targetClass' => Roles::className(), 'targetAttribute' => ['role' => 'role']],
+            [['lang_id'], 'exist', 'skipOnError' => true, 'targetClass' => Lang::className(), 'targetAttribute' => ['lang_id' => 'id']],
+            [['client_id'], 'exist', 'skipOnError' => true, 'targetClass' => Clients::className(), 'targetAttribute' => ['client_id' => 'id']],
         ];
     }
     /**
@@ -131,9 +153,57 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getCurrencyRates()
+    {
+        return $this->hasMany(CurrencyRate::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDiscounts()
+    {
+        return $this->hasMany(Discounts::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrders()
+    {
+        return $this->hasMany(Orders::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRolequ()
+    {
+        return $this->hasOne(Roles::className(), ['role' => 'role']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getLang()
     {
         return $this->hasOne(Lang::className(), ['id' => 'lang_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getClient()
+    {
+        return $this->hasOne(Clients::className(), ['id' => 'client_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getWherehouses()
+    {
+        return $this->hasMany(Wherehouses::className(), ['user_id' => 'id']);
     }
 
 

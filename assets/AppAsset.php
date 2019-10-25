@@ -22,17 +22,20 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'theme/main.css',
-        'theme/assets/fontawesome/css/all.css',
-        'myassets/css/bootstrap.min.css',
+//        'theme/assets/fontawesome/css/all.css',
+//        'myassets/css/bootstrap.min.css',
         'myassets/css/style.css',
     ];
     public $js = [
         'theme/assets/scripts/main.js',
-        'theme/assets/fontawesome/js/all.js',
-        'myassets/js/bootstrap.min.js',
+//        'theme/assets/fontawesome/js/all.js',
+//        'myassets/js/bootstrap.min.js',
+    ];
+    public $jsOptions = [
+        'position' => \yii\web\View::POS_END
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+//        'yii\web\YiiAsset',
+//        'yii\bootstrap\BootstrapAsset',
     ];
 }

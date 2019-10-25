@@ -40,7 +40,7 @@ class RolesSearch extends Roles
      */
     public function search($params)
     {
-        $query = Roles::find();
+        $query = Roles::find()->where(['<>','status',10]);
 
         // add conditions that should always apply here
 

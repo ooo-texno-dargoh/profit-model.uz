@@ -15,8 +15,12 @@ use app\models\search\CitytownsSearch;
 use app\models\search\RegionsSearch;
 use app\models\search\RolesSearch;
 use app\models\search\WherehouseGroupsSearch;
+use app\models\User;
 use app\models\WherehouseGroups;
 use Yii;
+use yii\base\Exception;
+use yii\base\Model;
+use yii\web\UploadedFile;
 
 class QoshimchaController extends \yii\web\Controller
 {
@@ -152,7 +156,35 @@ class QoshimchaController extends \yii\web\Controller
 
     public function actionIshchiHodimlar()
     {
+        if($id=Yii::$app->request->post()) {
+            $id=$id['id'];
+            $model = User::findOne($id);
+            $old = $model->photo;
+            $oldPass = $model->password;
+            if ($model->load(Yii::$app->request->post())) {
 
+                if ($model->password) {
+                    try {
+                        $model->password = Yii::$app->security->generatePasswordHash($model->password);
+                    } catch (Exception $e) {
+                    }
+                } else {
+                    $model->password = $oldPass;
+                }
+                $date = date('Y-m-d-h-i-s');
+                if ($model->photo = UploadedFile::getInstance($model, 'photo')) {
+                    $model->photo->saveAs(Yii::$app->basePath . '/web/upload/pictures/' . $date . '.' . $model->photo->extension);
+                    $model->photo = $date . '.' . $model->photo->extension;
+                } else {
+                    $model->photo = $old;
+                }
+//            debug($model);
+//            exit();
+                $model->save();
+
+                return $this->render('ishchi-hodimlar',['activeTab'=>'tab-'.$model->rolequ->id.'0']);
+            }
+        }
         return $this->render('ishchi-hodimlar');
     }
 
@@ -165,7 +197,7 @@ class QoshimchaController extends \yii\web\Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-        return $this->render('lavozimlar');
+//        return $this->render('lavozimlar');
     }
     public function actionAddRole()
     {
@@ -189,6 +221,13 @@ class QoshimchaController extends \yii\web\Controller
         return $this->render('view-role',[
             'model'=>Roles::findOne($id),
         ]);
+    }
+    public function actionDeleteRole($id)
+    {
+        $model=Roles::findOne($id);
+        $model->status=10;
+        $model->save();
+        return $this->redirect(['lavozimlar']);
     }
 
     public function actionOmborlar()
@@ -231,5 +270,47 @@ class QoshimchaController extends \yii\web\Controller
         $model->status=10;
         $model->save();
         return $this->redirect(['omborlar']);
+    }
+
+    public function actionUpdateUser($id)
+    {
+        $model = User::findOne($id);
+        $old = $model->photo;
+        $oldPass=$model->password;
+        if ($model->load(Yii::$app->request->post())) {
+
+            if($model->password){
+                try {
+                    $model->password = Yii::$app->security->generatePasswordHash($model->password);
+                } catch (Exception $e) {
+                }
+            }
+            else{
+                $model->password=$oldPass;
+            }
+            $date = date('Y-m-d-h-i-s');
+            if($model->photo = UploadedFile::getInstance($model,'photo')){
+                $model->photo->saveAs(Yii::$app->basePath.'/web/upload/pictures/'.$date.'.'.$model->photo->extension);
+                $model->photo = $date.'.'.$model->photo->extension;
+            }else{
+                $model->photo = $old;
+            }
+//            debug($model);
+//            exit();
+            $model->save();
+
+            return $this->redirect(['ishchi-hodimlar']);
+        } else {
+            $model->password='';
+            return $this->render('update-user', [
+                'model' => $model,
+            ]);
+        }
+    }
+    public function actionDeleteUser($id){
+        $model=User::findOne($id);
+        $model->status=10;
+        $model->save();
+        return $this->redirect(['ishchi-hodimlar']);
     }
 }

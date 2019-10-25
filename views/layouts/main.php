@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use app\widgets\Alert;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -598,7 +599,20 @@ $categories=\app\models\Categories::find()->all();
             </div>
         </div>
 
-        <?php $this->endBody() ?>
+        <?php $this->endBody() ?> <?php
+        Modal::begin([
+            'header' => '<h2>Show Modal</h2>',
+            'toggleButton' => ['label' => 'click me'],
+            'id' => 'modal-opened',
+            'size' => 'modal-lg',
+        ]);
+
+        echo 'Modal Opened';
+
+        Modal::end();
+        ?>
+
 </body>
 </html>
 <?php $this->endPage() ?>
+
