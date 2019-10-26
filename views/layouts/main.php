@@ -599,19 +599,7 @@ $categories=\app\models\Categories::find()->all();
             </div>
         </div>
 
-        <?php $this->endBody() ?> <?php
-        Modal::begin([
-            'header' => '<h2>Show Modal</h2>',
-            'toggleButton' => ['label' => 'click me'],
-            'id' => 'modal-opened',
-            'size' => 'modal-lg',
-        ]);
-
-        echo 'Modal Opened';
-
-        Modal::end();
-        ?>
-
+        <?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>

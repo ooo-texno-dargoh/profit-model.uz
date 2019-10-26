@@ -187,7 +187,37 @@ class QoshimchaController extends \yii\web\Controller
         }
         return $this->render('ishchi-hodimlar');
     }
-
+    public function actionAddUser()
+    {
+        $model=new User();
+        $model->client_id=0;
+        if($model->load(Yii::$app->request->post()) )
+        {
+            if ($model->password) {
+                try {
+                    $model->password = Yii::$app->security->generatePasswordHash($model->password);
+                } catch (Exception $e) {
+                    $model->password = 123;
+                }
+            } else {
+                $model->password = 123;
+            }
+            $date = date('Y-m-d-h-i-s');
+            if ($model->photo = UploadedFile::getInstance($model, 'photo')) {
+                $model->photo->saveAs(Yii::$app->basePath . '/web/upload/pictures/' . $date . '.' . $model->photo->extension);
+                $model->photo = $date . '.' . $model->photo->extension;
+            } else {
+                $model->photo = 'avatar.jpg';
+            }
+//            debug($model);
+//            exit();
+            $model->save();
+            return $this->redirect(['ishchi-hodimlar','activeTab'=>'tab-'.$model->rolequ->id.'0']);
+        }
+        return $this->render('add-user',[
+            'model'=>$model,
+        ]);
+    }
     public function actionLavozimlar()
     {
         $searchModel = new RolesSearch();
@@ -272,40 +302,17 @@ class QoshimchaController extends \yii\web\Controller
         return $this->redirect(['omborlar']);
     }
 
-    public function actionUpdateUser($id)
+    public function actionUpdateUser()
     {
-        $model = User::findOne($id);
-        $old = $model->photo;
-        $oldPass=$model->password;
-        if ($model->load(Yii::$app->request->post())) {
+        $model=new User();
 
-            if($model->password){
-                try {
-                    $model->password = Yii::$app->security->generatePasswordHash($model->password);
-                } catch (Exception $e) {
-                }
-            }
-            else{
-                $model->password=$oldPass;
-            }
-            $date = date('Y-m-d-h-i-s');
-            if($model->photo = UploadedFile::getInstance($model,'photo')){
-                $model->photo->saveAs(Yii::$app->basePath.'/web/upload/pictures/'.$date.'.'.$model->photo->extension);
-                $model->photo = $date.'.'.$model->photo->extension;
-            }else{
-                $model->photo = $old;
-            }
-//            debug($model);
-//            exit();
-            $model->save();
-
-            return $this->redirect(['ishchi-hodimlar']);
-        } else {
-            $model->password='';
-            return $this->render('update-user', [
-                'model' => $model,
-            ]);
+        if($model->load(Yii::$app->request->post())){
+            $olduser=User::findOne($model->id);
+            debug(Yii::$app->request->post('id'));
+            debug($olduser);
+            exit();
         }
+
     }
     public function actionDeleteUser($id){
         $model=User::findOne($id);

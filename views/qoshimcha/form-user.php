@@ -2,22 +2,15 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm; ?>
-<?php $form = ActiveForm::begin([
-        'method'=>'post',
-//        'action'=>$model->id!==null ? '/qoshimcha/update-user?id='.$model->id : '/qoshimcha/update-user',
-]);
+<?php $form = ActiveForm::begin();
 //debug($model);
 ?>
-
-    <div class="form-group bmd-form-group is-focused">
-
-        <label for="add-pic" class="add-pic-label">
-            <label class="bmd-label-floating">Avatar</label>
-            <img id="blah" src="<?= Yii::$app->homeUrl?>upload/pictures/<?=$model->photo ? $model->photo : 'avatar.jpg'?>" alt="your image" class="add-image"/>
-            <?= $form->field($model, 'photo')->fileInput(['onchange'=>'readURL(this)','id'=>'add-pic','accept'=>'image/*'])->label('',['style'=>'display:none']) ?>
-<!--                    <input type='file' onchange="readURL(this);" id="add-pic" accept="image/*"/>-->
-        </label>
-    </div>
+    <label for="add-pic" class="add-pic-label" style="max-height: 200px">
+        Rasm <br>
+        <img id="blah" class="rounded-circle mx-auto d-block" style="height: 130px;width: 130px" src="<?= Yii::$app->homeUrl?>upload/pictures/<?=$model->photo ? $model->photo : 'avatar.jpg'?>" alt="your image" />
+        <?= $form->field($model, 'photo')->fileInput(['onchange'=>'readURL(this)','id'=>'add-pic','accept'=>'image/*'])->label('',['style'=>'display:none']) ?>
+<!--                <input type='file' onchange="readURL(this);" id="add-pic" accept="image/*"/>-->
+    </label>
 <?= Html::hiddenInput('id', $model->id); ?>
 <?= $form->field($model, 'fio')->textInput(['maxlength' => true]) ?>
 
@@ -43,3 +36,17 @@ use yii\widgets\ActiveForm; ?>
     </div>
 
 <?php ActiveForm::end(); ?>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah')
+                    .attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

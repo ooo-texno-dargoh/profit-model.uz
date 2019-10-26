@@ -2,6 +2,7 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 $roles=\app\models\Roles::find()->where(['<>','status',10])->all();
 $users=\app\models\User::find()->where(['<>','status',10])->all();
@@ -61,11 +62,11 @@ $users=\app\models\User::find()->where(['<>','status',10])->all();
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab-view-user-<?=$user->id?>" role="tabpanel">
                                         <div class="row">
-                                            <div class="col-lg-3">
-                                                <img src="<?=Yii::$app->homeUrl?>upload/pictures/<?=$user->photo?>" alt class="rounded-circle add-image">
-                                                <p class="info-title"><?=$user->rolequ->name?></p>
+                                            <div class="col-lg-4">
+                                                <img src="<?=Yii::$app->homeUrl?>upload/pictures/<?=$user->photo?>" alt class="rounded-circle mx-auto d-block" style="height: 130px;width: 130px">
+                                                <p style="text-align: center;"><?=$user->rolequ->name?></p>
                                              </div>
-                                            <div class="col-lg-9">
+                                            <div class="col-lg-8">
                                                 <table class="mb-0 table table-borderless">
                                                     <tr>
                                                         <th>Login</th>
@@ -89,12 +90,7 @@ $users=\app\models\User::find()->where(['<>','status',10])->all();
                                         </div>
 
                                     </div>
-                                    <div class="tab-pane" id="tab-update-user-<?=$user->id?>" role="tabpanel">
-                                        <?php $user->password=''?>
-                                        <?= $this->render('form-user', [
-                                            'model' => $user,
-                                        ]) ?>
-                                    </div>
+
                                 </div>
                             </div>
 <!--                            <div class="d-block text-right card-footer">-->
@@ -135,11 +131,11 @@ $users=\app\models\User::find()->where(['<>','status',10])->all();
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tab-view-user-<?=$user->id.'aa'.$role->id?>" role="tabpanel">
                                     <div class="row">
-                                        <div class="col-lg-3">
-                                            <img src="<?=Yii::$app->homeUrl?>upload/pictures/<?=$user->photo?>" alt class="rounded-circle add-image">
-                                            <p class="info-title"><?=$user->rolequ->name?></p>
+                                        <div class="col-lg-4">
+                                            <img src="<?=Yii::$app->homeUrl?>upload/pictures/<?=$user->photo?>" alt class="rounded-circle mx-auto d-block" style="height: 130px;width: 130px">
+                                            <p style="text-align: center;"><?=$user->rolequ->name?></p>
                                         </div>
-                                        <div class="col-lg-9">
+                                        <div class="col-lg-8">
                                             <table class="mb-0 table table-borderless">
                                                 <tr>
                                                     <th>Login</th>
@@ -163,12 +159,6 @@ $users=\app\models\User::find()->where(['<>','status',10])->all();
                                     </div>
 
                                 </div>
-                                <div class="tab-pane" id="tab-update-user-<?=$user->id.'aa'.$role->id?>" role="tabpanel">
-                                    <?php $user->password=''?>
-                                    <?= $this->render('form-user', [
-                                        'model' => $user,
-                                    ]) ?>
-                                </div>
                             </div>
                         </div>
                         <!--                            <div class="d-block text-right card-footer">-->
@@ -184,3 +174,4 @@ $users=\app\models\User::find()->where(['<>','status',10])->all();
         endforeach;
         ?>
     </div>
+
